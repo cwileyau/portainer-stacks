@@ -32,26 +32,6 @@ services:
       servarrnetwork:
         ipv4_address: 172.18.0.9
 
-#  nzbget:
-#    image: lscr.io/linuxserver/nzbget:latest
-#    container_name: nzbget
-#    environment:
-#      - PUID=1000
-#      - PGID=1000
-#      - TZ=Australia/Brisbane
-#      - NZBGET_USER=admin
-#      - NZBGET_PASS=12georgia
-#    volumes:
-#      - /etc/localtime:/etc/localtime:ro
-#      - /docker/nzbget:/config
-#      - /home/craig/data:/data
-#    restart: unless-stopped
-#    ports:
-#      - 6789:6789
-#    networks:
-#      servarrnetwork:
-#        ipv4_address: 172.18.0.10
-
   medusa:
     image: pymedusa/medusa
     container_name: medusa
@@ -69,23 +49,7 @@ services:
     networks:
       servarrnetwork:
         ipv4_address: 172.18.0.11
-        
-  filebrowser:
-    image: filebrowser/filebrowser:s6
-    container_name: filebrowser
-    volumes:
-      - /home/craig/data:/srv # Directory you want exposed to filebrowser.
-      - /docker/filebrowser/config:/config
-    environment:
-      - PUID=1000
-      - PGID=1000
-    ports:
-      - 80:80
-    networks:
-      servarrnetwork:
-        ipv4_address: 172.18.0.12
-    restart: unless-stopped
-  
+
   sabnzbd:
     image: lscr.io/linuxserver/sabnzbd:latest
     container_name: sabnzbd
@@ -103,3 +67,35 @@ services:
       servarrnetwork:
         ipv4_address: 172.18.0.13  
     restart: unless-stopped
+
+  tautullisingaplex:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautullisingaplex
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Australia/Brisbane
+    volumes:
+      - /docker/tautullisinga/config:/config
+    ports:
+      - 8181:8181
+    restart: unless-stopped
+    networks:
+      servarrnetwork:
+        ipv4_address: 172.18.0.14
+
+  tautulliwileyplex:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulliwileyplex
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Australia/Brisbane
+    volumes:
+      - /docker/tautulliwiley/config:/config
+    ports:
+      - 8182:8182
+    restart: unless-stopped
+    networks:
+      servarrnetwork:
+        ipv4_address: 172.18.0.15
