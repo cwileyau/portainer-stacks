@@ -5,32 +5,6 @@ networks:
         - subnet: 172.18.0.0/24
 
 services:
-#  qbittorrent:
-#    image: lscr.io/linuxserver/qbittorrent:latest
-#    container_name: qbittorrent
-#    restart: unless-stopped
-#    environment:
-#      - PUID=1000
-#      - PGID=1000
-#      - TZ=Australia/Brisbane
-#      - WEBUI_PORT=8080
-#      - TORRENTING_PORT=2881
-#    volumes:
-#      - /docker/qbittorrent:/config
-#      - /home/craig/data:/data
-#      - /video:/video
-#    healthcheck:
-#        test: ping -c 1 1.1.1.1 || exit 1
-#        interval: 60s
-#        retries: 3
-#        start_period: 20s
-#        timeout: 10s
-#    ports:
-#      - 2881:2881
-#      - 8080:8080
-#    networks:
-#      servarrnetwork:
-#        ipv4_address: 172.18.0.9
 
   rutorrent:
     image: ghcr.io/linuxserver/rutorrent
@@ -47,7 +21,7 @@ services:
       - 5000:5000
       - 51413:51413
       - 2881:2881/udp
-    restart: unless-stopped
+    restart: always
     networks:
       servarrnetwork:
         ipv4_address: 172.18.0.10
@@ -55,7 +29,7 @@ services:
   medusa:
     image: pymedusa/medusa
     container_name: medusa
-    restart: unless-stopped
+    restart: always
     environment:
       - PUID=1000
       - PGID=1000
@@ -86,7 +60,7 @@ services:
     networks:
       servarrnetwork:
         ipv4_address: 172.18.0.13  
-    restart: unless-stopped
+    restart: always
 
   tautullisingaplex:
     image: lscr.io/linuxserver/tautulli:latest
@@ -99,7 +73,7 @@ services:
       - /docker/tautullisinga/config:/config
     ports:
       - 8181:8181
-    restart: unless-stopped
+    restart: always
     networks:
       servarrnetwork:
         ipv4_address: 172.18.0.14
@@ -115,7 +89,7 @@ services:
       - /docker/tautulliwiley/config:/config
     ports:
       - 8182:8182
-    restart: unless-stopped
+    restart: always
     networks:
       servarrnetwork:
         ipv4_address: 172.18.0.15
