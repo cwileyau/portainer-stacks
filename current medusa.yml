@@ -17,7 +17,7 @@ services:
       - /docker/rutorrent/config:/config
       - /video:/downloads
     ports:
-      - 80:80
+      - 81:81
       - 5000:5000
       - 51413:51413
       - 2881:2881/udp
