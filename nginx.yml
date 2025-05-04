@@ -1,5 +1,8 @@
-services:
-
+networks:
+  external_network:
+    external:
+      name: medusa_servarrnetwork
+services:    
   nginx:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: nginx
@@ -20,7 +23,7 @@ services:
       # Uncomment this if IPv6 is not enabled on your host
       DISABLE_IPV6: 'true'
     networks:
-      servarrnetwork:
+      external_network:
         ipv4_address: 172.18.0.16
     volumes:
       - /docker/nginx/data:/data
