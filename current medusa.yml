@@ -1,4 +1,4 @@
-rnetworks:
+networks:
   servarrnetwork:
     ipam:
       config:
@@ -17,7 +17,8 @@ services:
       - /docker/rutorrent/config:/config
       - /video:/downloads
     ports:
-      - 82:82 #changed from port 81 in nginx config in rutorrent
+      - 82:82
+
       - 5000:5000
       - 51413:51413
       - 2881:2881/udp
@@ -38,6 +39,7 @@ services:
       - /docker/medusa:/config
       - /home/craig/data/downloads/medusa:/downloads
       - /home/craig/data/tv:/tv
+      - /video:/video
     ports:
       - 8081:8081
     networks:
@@ -94,28 +96,4 @@ services:
       servarrnetwork:
         ipv4_address: 172.18.0.15
 
-  nginx:
-    image: 'jc21/nginx-proxy-manager:latest'
-    container_name: nginx
-    restart: unless-stopped
-    ports:
-      # These ports are in format <host-port>:<container-port>
-      - 80:80 # Public HTTP Port
-      - 443:443 # Public HTTPS Port
-      - 81:81 # Admin Web Port
-      # Add any other Stream port you want to expose
-      # - '21:21' # FTP
 
-    environment:
-      # Uncomment this if you want to change the location of
-      # the SQLite DB file within the container
-      # DB_SQLITE_FILE: "/data/database.sqlite"
-
-      # Uncomment this if IPv6 is not enabled on your host
-      DISABLE_IPV6: 'true'
-    networks:
-      servarrnetwork:
-        ipv4_address: 172.18.0.16
-    volumes:
-      - /docker/nginx/data:/data
-      - /docker/nginx/letsencrypt:/etc/letsencrypt
