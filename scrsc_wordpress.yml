@@ -1,0 +1,23 @@
+services:
+  wordpress:
+      image: wordpress
+      restart: unless-stopped
+      depends_on:
+        - mariadb
+      links:
+       - mariadb:mysql
+      environment:
+       - WORDPRESS_DB_PASSWORD=12georgia
+       - WORDPRESS_DB_USER=root
+      ports:
+       - 85:80
+      volumes:
+       - /docker/scrsc_wordpress/html:/var/www/html
+  mariadb:
+      image: mariadb
+      restart: unless-stopped
+      environment:
+       - MYSQL_ROOT_PASSWORD=12georgia
+       - MYSQL_DATABASE=wordpress
+      volumes:
+       - /docker/scrsc_wordpress/db:/var/lib/mysql
