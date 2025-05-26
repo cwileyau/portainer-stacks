@@ -1,0 +1,19 @@
+services:
+  wordpress:
+      image: wordpress
+      links:
+       - mariadb:mysql
+      environment:
+       - WORDPRESS_DB_PASSWORD=12georgia
+       - WORDPRESS_DB_USER=root
+      ports:
+       - 84:80
+      volumes:
+       - /docker/wordpress/html:/var/www/html
+  mariadb:
+      image: mariadb
+      environment:
+       - MYSQL_ROOT_PASSWORD=12georgia
+       - MYSQL_DATABASE=wordpress
+      volumes:
+       - /docker/wordpress/db:/var/lib/mysql
