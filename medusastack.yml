@@ -6,6 +6,7 @@ networks:
 
 services:
 
+  
   rutorrent:
     image: ghcr.io/linuxserver/rutorrent
     container_name: rutorrent
@@ -17,11 +18,13 @@ services:
       - /docker/rutorrent/config:/config
       - /video:/downloads
     ports:
-      - 80:80
+      - 82:82
+
       - 5000:5000
       - 51413:51413
       - 2881:2881/udp
-    restart: unless-stopped
+    restart: always
+    #network_mode: "service:wireguard"
     networks:
       servarrnetwork:
         ipv4_address: 172.18.0.10
@@ -29,7 +32,7 @@ services:
   medusa:
     image: pymedusa/medusa
     container_name: medusa
-    restart: unless-stopped
+    restart: always
     environment:
       - PUID=1000
       - PGID=1000
@@ -38,6 +41,7 @@ services:
       - /docker/medusa:/config
       - /home/craig/data/downloads/medusa:/downloads
       - /home/craig/data/tv:/tv
+      - /video:/video
     ports:
       - 8081:8081
     networks:
@@ -60,7 +64,7 @@ services:
     networks:
       servarrnetwork:
         ipv4_address: 172.18.0.13  
-    restart: unless-stopped
+    restart: always
 
   tautullisingaplex:
     image: lscr.io/linuxserver/tautulli:latest
@@ -73,7 +77,7 @@ services:
       - /docker/tautullisinga/config:/config
     ports:
       - 8181:8181
-    restart: unless-stopped
+    restart: always
     networks:
       servarrnetwork:
         ipv4_address: 172.18.0.14
@@ -89,7 +93,7 @@ services:
       - /docker/tautulliwiley/config:/config
     ports:
       - 8182:8182
-    restart: unless-stopped
+    restart: always
     networks:
       servarrnetwork:
         ipv4_address: 172.18.0.15
