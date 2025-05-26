@@ -6,6 +6,7 @@ networks:
 
 services:
 
+  
   rutorrent:
     image: ghcr.io/linuxserver/rutorrent
     container_name: rutorrent
@@ -23,6 +24,7 @@ services:
       - 51413:51413
       - 2881:2881/udp
     restart: always
+    #network_mode: "service:wireguard"
     networks:
       servarrnetwork:
         ipv4_address: 172.18.0.10
@@ -95,5 +97,3 @@ services:
     networks:
       servarrnetwork:
         ipv4_address: 172.18.0.15
-
-
