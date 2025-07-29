@@ -1,3 +1,7 @@
+#networks:
+#  external_network:
+#    external:
+#      name: medusa_servarrnetwork
 services:
 
   wireguard:
@@ -21,6 +25,9 @@ services:
     volumes:
       - /docker/wireguard/config:/config
       #- /lib/modules:/lib/modules #optional
+ #   networks:
+ #     external_network:
+ #       ipv4_address: 172.18.0.18
     ports:
       - 51820:51820/udp
     sysctls:
