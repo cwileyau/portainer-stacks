@@ -1,5 +1,14 @@
 services:
-  wordpress:
+    mariadb:
+      image: mariadb
+      environment:
+       - MYSQL_ROOT_PASSWORD=12georgia
+       - MYSQL_DATABASE=wordpress
+      volumes:
+       - /docker/wordpress/db:/var/lib/mysql
+      restart: always
+
+    wordpress:
       image: wordpress
       links:
        - mariadb:mysql
@@ -10,10 +19,11 @@ services:
        - 84:80
       volumes:
        - /docker/wordpress/html:/var/www/html
-  mariadb:
-      image: mariadb
-      environment:
-       - MYSQL_ROOT_PASSWORD=12georgia
-       - MYSQL_DATABASE=wordpress
-      volumes:
-       - /docker/wordpress/db:/var/lib/mysql
+      restart: always
+      depends_on:
+       - mariadb
+      healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:80"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
