@@ -4,9 +4,9 @@ networks:
       name: medusa_servarrnetwork
 services:    
   nginx:
-    image: 'jc21/nginx-proxy-manager:latest'
+    image: jc21/nginx-proxy-manager:latest
     container_name: nginx
-    restart: unless-stopped
+    restart: always
     ports:
       - 80:80 # Public HTTP Port
       - 443:443 # Public HTTPS Port
@@ -15,7 +15,7 @@ services:
       # - '21:21' # FTP
 
     environment:
-      DISABLE_IPV6: 'true'
+      DISABLE_IPV6: true
     networks:
       external_network:
         ipv4_address: 172.18.0.16
