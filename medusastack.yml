@@ -6,28 +6,48 @@ networks:
 
 services:
 
-  
-  rutorrent:
-    image: ghcr.io/linuxserver/rutorrent
-    container_name: rutorrent
+#  rutorrent:
+#    image: ghcr.io/linuxserver/rutorrent
+#    container_name: rutorrent
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=Australia/Brisbane
+#    volumes:
+#      - /docker/rutorrent/config:/config
+#      - /video:/downloads
+#    ports:
+#      - 82:82
+#      - 5000:5000
+#      - 51413:51413
+#      - 2881:2881/udp
+#    restart: always
+#    #network_mode: service:wireguard
+#    networks:
+#      servarrnetwork:
+#        ipv4_address: 172.18.0.10
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Australia/Brisbane
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=49297
     volumes:
-      - /docker/rutorrent/config:/config
-      - /video:/downloads
+      - /docker/qbittorrent/appdata:/config
+      - /video:/downloads #optional
     ports:
-      - 82:82
-
-      - 5000:5000
-      - 51413:51413
-      - 2881:2881/udp
+      - 8080:8080
+      - 49297:49297
+      - 49297:49297/udp
     restart: always
-    #network_mode: "service:wireguard"
     networks:
       servarrnetwork:
-        ipv4_address: 172.18.0.10
+        ipv4_address: 172.18.0.19
+
 
   medusa:
     image: pymedusa/medusa
@@ -39,6 +59,7 @@ services:
       - TZ=Australia/Brisbane
     volumes:
       - /docker/medusa:/config
+      - /docker/medusa/anime:/anime
       - /home/craig/data/downloads/medusa:/downloads
       - /home/craig/data/tv:/tv
       - /video:/video
@@ -58,7 +79,7 @@ services:
     volumes:
       - /docker/sabnzbd:/config
       - /video:/video #optional
-      - /home/craig/data/downloads/sabnzbd:/incomplete-downloads #optional
+      - /docker/sabnzbd/Downloads/incomplete:/incomplete-downloads #optional
     ports:
       - 8282:8282
     networks:
