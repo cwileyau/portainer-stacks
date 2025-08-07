@@ -6,26 +6,6 @@ networks:
 
 services:
 
-#  rutorrent:
-#    image: ghcr.io/linuxserver/rutorrent
-#    container_name: rutorrent
-#    environment:
-#      - PUID=1000
-#      - PGID=1000
-#      - TZ=Australia/Brisbane
-#    volumes:
-#      - /docker/rutorrent/config:/config
-#      - /video:/downloads
-#    ports:
-#      - 82:82
-#      - 5000:5000
-#      - 51413:51413
-#      - 2881:2881/udp
-#    restart: always
-#    #network_mode: service:wireguard
-#    networks:
-#      servarrnetwork:
-#        ipv4_address: 172.18.0.10
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
@@ -118,3 +98,25 @@ services:
     networks:
       servarrnetwork:
         ipv4_address: 172.18.0.15
+
+#  rutorrent:
+#    image: ghcr.io/linuxserver/rutorrent
+#    container_name: rutorrent
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=Australia/Brisbane
+#    volumes:
+#      - /docker/rutorrent/config:/config
+#      - /video:/downloads
+#    ports:
+#      - 82:82
+#      - 5000:5000
+#      - 51413:51413
+#      - 2881:2881/udp
+#    restart: always
+#    #network_mode: service:wireguard
+#    networks:
+#      servarrnetwork:
+#        ipv4_address: 172.18.0.10
+  
